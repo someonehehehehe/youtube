@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,108 +6,191 @@
 <title>Jaanu's Little Phone 💗</title>
 <style>
 *{box-sizing:border-box}
-:root{--pink:#ff91b5;--dark:#101016;--white:#fff}
-body{margin:0;font-family:Arial,sans-serif;color:white;background:#101016}
+:root{--pink:#ff91b5;--dark:#101016;--white:#fff;--bg:#0f0f0f;--soft:#272727;--muted:#aaaaaa;--line:#3f3f3f}
+body{margin:0;font-family:Roboto,Arial,sans-serif;color:white;background:#101016}
 button{font:inherit;cursor:pointer}
-#phoneHome{
- min-height:100vh;position:relative;overflow:hidden;
- display:flex;flex-direction:column;align-items:center;
- padding:28px 18px 35px;
- background:linear-gradient(160deg,#332c50,#171729 50%,#101018);
-}
-#phoneHome:before,#phoneHome:after{
- content:"✦  ·  ✧  ·  ✦  ·  ✧";
- position:absolute;left:5%;top:17%;color:#ffd7e6;
- font-size:23px;letter-spacing:17px;opacity:.65;
- pointer-events:none
-}
+
+/* ---------- PHONE HOME SCREEN (unchanged) ---------- */
+#phoneHome{min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:28px 18px 35px;background:linear-gradient(160deg,#332c50,#171729 50%,#101018)}
+#phoneHome:before,#phoneHome:after{content:"✦  ·  ✧  ·  ✦  ·  ✧";position:absolute;left:5%;top:17%;color:#ffd7e6;font-size:23px;letter-spacing:17px;opacity:.65;pointer-events:none}
 #phoneHome:after{top:auto;bottom:20%;left:auto;right:0;writing-mode:vertical-rl}
-.status{width:min(420px,100%);display:flex;justify-content:space-between;
- font-size:13px;color:#eee;position:relative;z-index:1}
+.status{width:min(420px,100%);display:flex;justify-content:space-between;font-size:13px;color:#eee;position:relative;z-index:1}
 .phone-title{text-align:center;margin-top:65px;position:relative;z-index:1}
 .phone-title .moon{font-size:50px}
 .phone-title h1{font-size:30px;margin:14px 0 8px}
 .phone-title p{color:#e6cfe2;font-size:14px}
 .clock{font-size:49px;font-weight:300;margin-top:25px;letter-spacing:2px}
 .date{color:#d7c9e5;font-size:14px;margin-top:5px}
-.apps{display:grid;grid-template-columns:repeat(2,100px);gap:29px 40px;
- margin:55px 0 38px;position:relative;z-index:1}
-.app{border:0;background:transparent;color:white;display:flex;
- flex-direction:column;align-items:center;gap:10px}
-.app-icon{width:76px;height:76px;border-radius:23px;
- display:grid;place-items:center;font-size:36px;
- box-shadow:0 8px 25px #0004;transition:transform .2s}
+.apps{display:grid;grid-template-columns:repeat(2,100px);gap:29px 40px;margin:55px 0 38px;position:relative;z-index:1}
+.app{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;gap:10px}
+.app-icon{width:76px;height:76px;border-radius:23px;display:grid;place-items:center;font-size:36px;box-shadow:0 8px 25px #0004;transition:transform .2s}
 .app:hover .app-icon{transform:translateY(-5px) scale(1.06)}
 .youtube{background:linear-gradient(145deg,#ff6565,#e51b45)}
 .whatsapp{background:linear-gradient(145deg,#5ee89a,#0caa65)}
 .instagram{background:linear-gradient(135deg,#ffd36b,#ff458b,#9638d4)}
 .spotify{background:linear-gradient(145deg,#44e68b,#11854c)}
 .app-label{font-size:13px;font-weight:600}
-.phone-note{color:#e7d9e9;font-size:13px;text-align:center;
- line-height:1.8;position:relative;z-index:1}
-.dock{margin-top:auto;display:flex;justify-content:center;gap:22px;
- width:min(350px,100%);padding:14px 20px;border:1px solid #ffffff25;
- background:#ffffff12;border-radius:25px}
+.phone-note{color:#e7d9e9;font-size:13px;text-align:center;line-height:1.8;position:relative;z-index:1}
+.dock{margin-top:auto;display:flex;justify-content:center;gap:22px;width:min(350px,100%);padding:14px 20px;border:1px solid #ffffff25;background:#ffffff12;border-radius:25px}
 .dock span{font-size:23px}
-.modal{display:none;position:fixed;inset:0;z-index:20;
- background:#080810d9;align-items:center;justify-content:center;padding:20px}
+.modal{display:none;position:fixed;inset:0;z-index:30;background:#080810d9;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
-.pop-card{width:min(370px,100%);background:#201e30;border:1px solid #ffffff24;
- border-radius:25px;padding:28px 23px;text-align:center;
- box-shadow:0 20px 80px #0008;animation:pop .25s ease}
+.pop-card{width:min(370px,100%);background:#201e30;border:1px solid #ffffff24;border-radius:25px;padding:28px 23px;text-align:center;box-shadow:0 20px 80px #0008;animation:pop .25s ease}
 @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
 .pop-icon{font-size:57px}
 .pop-card h2{font-size:22px;margin:15px 0 12px}
 .pop-card p{font-size:14px;line-height:1.8;color:#e2d9e9}
-.pop-btn{display:block;width:100%;padding:13px;margin-top:12px;
- border:0;border-radius:25px;background:var(--pink);color:#321423;font-weight:bold}
+.pop-btn{display:block;width:100%;padding:13px;margin-top:12px;border:0;border-radius:25px;background:var(--pink);color:#321423;font-weight:bold}
 .pop-btn.alt{background:#ffffff12;border:1px solid #ffffff30;color:white}
-#birthdaySite{display:none;background:#0f1012;min-height:100vh}
+
+/* ---------- VIDEO SITE ---------- */
+#birthdaySite{display:none;background:var(--bg);min-height:100vh;padding-bottom:70px}
 #birthdaySite.open{display:block}
-.topbar{height:60px;display:flex;align-items:center;gap:12px;padding:0 18px;
- background:#151519;position:sticky;top:0;z-index:5;border-bottom:1px solid #292930}
-.logo{font-size:18px;color:var(--pink);font-weight:bold;flex:1}
-.back{background:#2c2935;color:white;border:0;padding:10px 13px;border-radius:22px}
-.banner{margin:18px;border-radius:18px;min-height:190px;padding:25px;
- display:grid;place-items:center;text-align:center;
- background:radial-gradient(ellipse at 10% 100%,#ff9db544,transparent 40%),
- linear-gradient(130deg,#292542,#17172a,#3b2b47)}
-.banner h1{font-size:clamp(27px,5vw,42px);margin:0 0 12px}
-.banner p{color:#f5cfe0;line-height:1.7}
-.channel{padding:8px 20px 22px;display:flex;gap:15px;align-items:center;
- border-bottom:1px solid #292930;margin:0 18px 22px}
-.avatar{width:65px;height:65px;border-radius:50%;display:grid;place-items:center;
- font-size:32px;background:linear-gradient(145deg,#ffb2cb,#5b4a80)}
-.channel h2{margin:0 0 8px;font-size:21px}
-.channel p{margin:0;color:#aaa;font-size:13px;line-height:1.7}
-.section{padding:0 18px 25px}
-.section h3{font-size:19px}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.video{min-width:0;cursor:pointer}
-.video img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;
- background:#28233a}
-.video h4{margin:8px 0 5px;font-size:14px;line-height:1.5}
-.video p{margin:0;color:#aaa;font-size:12px}
-.action{padding:11px 17px;border:0;border-radius:25px;
- background:var(--pink);color:#301521;font-weight:bold}
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
-.letter{padding:20px;border-radius:15px;background:#211d2b;
- color:#f5e6ef;line-height:1.9}
-.video-modal{position:fixed;inset:0;z-index:12;background:#000d;display:none;
- align-items:center;justify-content:center;padding:18px}
+.topbar{position:sticky;top:0;z-index:10;height:56px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--bg)}
+.top-left{display:flex;align-items:center;gap:6px}
+.icon-btn{background:transparent;border:0;color:#fff;width:40px;height:40px;border-radius:50%;font-size:18px;display:grid;place-items:center;flex-shrink:0}
+.icon-btn:hover{background:var(--soft)}
+.brand{display:flex;align-items:center;gap:7px;font-weight:700;font-size:17px;letter-spacing:-.4px;white-space:nowrap}
+.brand-badge{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ff91b5,#b46bd6);display:grid;place-items:center;font-size:13px}
+.search{flex:1;max-width:580px;margin:0 auto;display:none}
+.search input{flex:1;min-width:0;background:#121212;border:1px solid #303030;border-radius:40px 0 0 40px;padding:9px 16px;color:#fff;font-size:15px;outline:none}
+.search input:focus{border-color:#1c62b9}
+.search .sbtn{border:1px solid #303030;border-left:0;background:#222;color:#fff;border-radius:0 40px 40px 0;padding:0 20px}
+.top-right{display:flex;align-items:center;gap:4px;margin-left:auto}
+.me{width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#ffb2cb,#5b4a80);display:grid;place-items:center;font-size:15px}
+.mobile-search{display:none;padding:0 12px 8px}
+.mobile-search.show{display:flex}
+.mobile-search input{flex:1;background:#121212;border:1px solid #303030;border-radius:40px;padding:9px 16px;color:#fff;outline:none}
+
+.chips{display:flex;gap:10px;overflow-x:auto;padding:8px 14px 14px;scrollbar-width:none;position:sticky;top:56px;background:var(--bg);z-index:9}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:0;background:var(--soft);color:#fff;padding:7px 13px;border-radius:8px;font-size:14px;font-weight:500}
+.chip.active{background:#f1f1f1;color:#0f0f0f}
+
+.ch-banner{margin:0 14px;border-radius:14px;min-height:150px;padding:22px;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at 10% 100%,#ff9db555,transparent 45%),radial-gradient(ellipse at 90% 0%,#9a7cff44,transparent 45%),linear-gradient(130deg,#292542,#17172a,#3b2b47)}
+.ch-banner h1{font-size:clamp(24px,5vw,40px);margin:0 0 10px}
+.ch-banner p{color:#f5cfe0;line-height:1.6;margin:0;font-size:14px}
+.ch-info{display:flex;gap:16px;align-items:center;padding:18px 14px 10px}
+.ch-avatar{width:72px;height:72px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:34px;background:linear-gradient(145deg,#ffb2cb,#5b4a80)}
+.ch-info h2{margin:0 0 4px;font-size:22px}
+.ch-meta{color:var(--muted);font-size:13px;line-height:1.6}
+.ch-about{color:var(--muted);font-size:13px;padding:0 14px 12px}
+.sub-btn{border:0;border-radius:20px;padding:9px 16px;background:#f1f1f1;color:#0f0f0f;font-weight:600;font-size:14px;white-space:nowrap}
+.sub-btn.on{background:var(--soft);color:#fff}
+.ch-actions{padding:0 14px 14px}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0 8px;overflow-x:auto;scrollbar-width:none}
+.tab{background:none;border:0;color:var(--muted);padding:12px 14px;font-weight:600;font-size:15px;border-bottom:2px solid transparent;white-space:nowrap}
+.tab.active{color:#fff;border-color:#fff}
+
+.section{padding:18px 14px 6px}
+.section h3{font-size:19px;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:1fr;gap:24px 16px}
+.card{cursor:pointer;min-width:0}
+.thumb{position:relative;border-radius:12px;overflow:hidden;background:#28233a}
+.thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .3s}
+.card:hover .thumb img{transform:scale(1.04)}
+.dur{position:absolute;right:7px;bottom:7px;background:#000c;font-size:12px;font-weight:600;padding:2px 5px;border-radius:4px}
+.card-meta{display:flex;gap:12px;margin-top:11px}
+.mini-av{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:17px;background:linear-gradient(145deg,#ffb2cb,#5b4a80)}
+.card h4{margin:0 0 5px;font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.empty{color:var(--muted);text-align:center;padding:30px 0}
+
+.moments{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
+.moment{flex:0 0 150px;cursor:pointer}
+.moment .mimg{position:relative;border-radius:12px;overflow:hidden}
+.moment img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+.moment .views{position:absolute;left:8px;bottom:8px;font-size:12px;font-weight:600;text-shadow:0 1px 4px #000}
+.moment h4{font-size:14px;margin:8px 0 0;line-height:1.4}
+
+.letter{padding:20px;border-radius:14px;background:#211d2b;color:#f5e6ef;line-height:1.9}
+.action{padding:10px 17px;border:0;border-radius:20px;background:var(--pink);color:#301521;font-weight:bold}
+.footer{text-align:center;padding:30px 20px;color:#777;font-size:12px}
+
+/* bottom nav (mobile) */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:12;display:flex;justify-content:space-around;background:var(--bg);border-top:1px solid #272727;padding:6px 0 8px}
+.bottom-nav button{background:none;border:0;color:#fff;display:flex;flex-direction:column;align-items:center;font-size:10px;gap:3px;min-width:56px}
+.bottom-nav .ico{font-size:19px}
+.bottom-nav .wish{width:40px;height:40px;border-radius:50%;border:1px solid #555;display:grid;place-items:center;font-size:19px}
+
+/* ---------- WATCH PAGE ---------- */
+#watchPage{display:none;position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto}
+#watchPage.show{display:block}
+.watch-wrap{display:grid;grid-template-columns:1fr;gap:20px;max-width:1300px;margin:0 auto;padding:0 0 40px}
+.player{position:relative;background:#000;aspect-ratio:16/9;overflow:hidden}
+.player img{width:100%;height:100%;object-fit:cover;opacity:.75;display:block}
+.play-overlay{position:absolute;inset:0;display:grid;place-items:center;background:#0004;border:0;width:100%}
+.play-circle{width:68px;height:68px;border-radius:50%;background:#000a;border:2px solid #fff8;display:grid;place-items:center;font-size:26px;color:#fff;padding-left:5px}
+.caption{position:absolute;left:5%;right:5%;bottom:14%;text-align:center;font-size:clamp(14px,2.6vw,20px);line-height:1.6;background:#000b;padding:10px 14px;border-radius:8px;display:none;animation:fadeUp .6s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.progress{position:absolute;left:0;bottom:0;height:4px;width:100%;background:#ffffff33}
+.progress div{height:100%;width:0;background:var(--pink)}
+.watch-main{padding:0}
+.watch-info{padding:12px 14px}
+.watch-info h1{font-size:19px;line-height:1.4;margin:0 0 12px}
+.owner{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.owner .who{flex:1;min-width:0}
+.owner b{display:block;font-size:15px}
+.owner span{color:var(--muted);font-size:12px}
+.actions{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:14px 0}
+.pill{display:flex;align-items:center;gap:6px;background:var(--soft);border:0;color:#fff;border-radius:20px;padding:8px 14px;font-size:14px;font-weight:500;white-space:nowrap}
+.pill:hover{background:#3f3f3f}
+.likebox{display:flex;background:var(--soft);border-radius:20px;overflow:hidden;flex-shrink:0}
+.likebox .pill{border-radius:0;background:transparent}
+.likebox .pill:first-child{border-right:1px solid #ffffff33}
+.pill.liked{color:var(--pink)}
+.desc{background:var(--soft);border-radius:12px;padding:12px;font-size:14px;line-height:1.7;cursor:pointer}
+.desc .stats{font-weight:600}
+.desc .tags{color:#3ea6ff}
+.desc .more{display:none;margin-top:8px}
+.desc.open .more{display:block}
+.desc .toggle{font-weight:600;margin-top:4px}
+.comments{padding:6px 14px}
+.comments h3{font-size:18px}
+.add-comment{display:flex;gap:12px;align-items:flex-start;margin-bottom:22px}
+.add-comment input{flex:1;background:none;border:0;border-bottom:1px solid #717171;color:#fff;padding:7px 0;font-size:14px;outline:none}
+.add-comment input:focus{border-color:#fff}
+.comment{display:flex;gap:12px;margin-bottom:20px}
+.comment b{font-size:13px}
+.comment small{color:var(--muted);margin-left:6px;font-size:12px}
+.comment p{margin:4px 0 6px;font-size:14px;line-height:1.5}
+.comment .c-act{color:var(--muted);font-size:13px}
+.upnext{padding:0 14px}
+.upnext h3{font-size:16px;margin:0 0 12px}
+.next{display:flex;gap:10px;margin-bottom:12px;cursor:pointer}
+.next .thumb{flex:0 0 168px}
+.next h4{font-size:14px;margin:0 0 5px;line-height:1.4}
+.next p{color:var(--muted);font-size:12px;margin:0;line-height:1.5}
+
+/* photo popup */
+.video-modal{position:fixed;inset:0;z-index:25;background:#000d;display:none;align-items:center;justify-content:center;padding:18px}
 .video-modal.show{display:flex}
-.video-box{width:min(520px,100%);background:#1b1a22;padding:24px;
- border-radius:20px;max-height:90vh;overflow:auto}
-.video-box h2{color:var(--pink)}
+.video-box{width:min(420px,100%);background:#1b1a22;padding:22px;border-radius:20px;max-height:90vh;overflow:auto}
+.video-box h2{color:var(--pink);margin-top:0}
 .video-box p{line-height:1.8;color:#e0d9e4}
-.close{float:right;background:#34313d;border:0;color:white;
- border-radius:50%;width:33px;height:33px;font-size:20px}
+.close{float:right;background:#34313d;border:0;color:white;border-radius:50%;width:33px;height:33px;font-size:20px}
+
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:#f1f1f1;color:#0f0f0f;padding:11px 18px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:40;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
 @media(min-width:650px){
  .apps{grid-template-columns:repeat(4,90px);gap:25px;margin-top:65px}
  .phone-title{margin-top:45px}
- .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
- .gallery{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .search{display:flex}
+ .mobile-search-btn{display:none!important}
+ .ch-banner{min-height:190px}
+ .watch-wrap{padding:20px 20px 40px}
+ .player{border-radius:12px}
+ .watch-info,.comments,.upnext{padding-left:0;padding-right:0}
+}
+@media(min-width:1000px){
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .watch-wrap{grid-template-columns:minmax(0,1fr) 400px}
+ .section,.ch-info,.ch-about,.ch-actions,.tabs{padding-left:40px;padding-right:40px}
+ .ch-banner{margin:0 40px}
+ .chips{padding-left:40px}
 }
 </style>
 </head>
@@ -116,10 +198,7 @@ button{font:inherit;cursor:pointer}
 
 <!-- PHONE HOME SCREEN -->
 <div id="phoneHome">
- <div class="status">
-  <span>♡ Jaanu's phone</span><span>●●●  Wi-Fi ▰</span>
- </div>
-
+ <div class="status"><span>♡ Jaanu's phone</span><span>●●●  Wi-Fi ▰</span></div>
  <div class="phone-title">
   <div class="moon">🌙</div>
   <h1>Hey, Jaanu! 💗</h1>
@@ -127,31 +206,13 @@ button{font:inherit;cursor:pointer}
   <div class="clock" id="clock">11:11</div>
   <div class="date">A little day made extra special ✨</div>
  </div>
-
  <div class="apps">
-  <button class="app" onclick="openApp('youtube')">
-   <span class="app-icon youtube">▶</span>
-   <span class="app-label">YouTube</span>
-  </button>
-  <button class="app" onclick="openApp('whatsapp')">
-   <span class="app-icon whatsapp">☏</span>
-   <span class="app-label">WhatsApp</span>
-  </button>
-  <button class="app" onclick="openApp('instagram')">
-   <span class="app-icon instagram">◎</span>
-   <span class="app-label">Instagram</span>
-  </button>
-  <button class="app" onclick="openApp('spotify')">
-   <span class="app-icon spotify">♫</span>
-   <span class="app-label">Spotify</span>
-  </button>
+  <button class="app" onclick="openApp('youtube')"><span class="app-icon youtube">▶</span><span class="app-label">YouTube</span></button>
+  <button class="app" onclick="openApp('whatsapp')"><span class="app-icon whatsapp">☏</span><span class="app-label">WhatsApp</span></button>
+  <button class="app" onclick="openApp('instagram')"><span class="app-icon instagram">◎</span><span class="app-label">Instagram</span></button>
+  <button class="app" onclick="openApp('spotify')"><span class="app-icon spotify">♫</span><span class="app-label">Spotify</span></button>
  </div>
-
- <div class="phone-note">
-  ✨ Four little apps, one special surprise ✨<br>
-  Psst... try opening them all!
- </div>
-
+ <div class="phone-note">✨ Four little apps, one special surprise ✨<br>Psst... try opening them all!</div>
  <div class="dock"><span>💌</span><span>🌷</span><span>📷</span><span>💗</span></div>
 </div>
 
@@ -166,43 +227,64 @@ button{font:inherit;cursor:pointer}
  </div>
 </div>
 
-<!-- YOUTUBE-INSPIRED BIRTHDAY WEBSITE -->
+<!-- VIDEO SITE -->
 <div id="birthdaySite">
  <header class="topbar">
-  <button class="back" onclick="goHome()">← Apps</button>
-  <div class="logo">♥ Our Little Universe</div>
-  <span>🌙</span>
+  <div class="top-left">
+   <button class="icon-btn" onclick="goHome()" title="Back to apps">☰</button>
+   <div class="brand"><span class="brand-badge">♥</span>Our Little Universe</div>
+  </div>
+  <form class="search" onsubmit="event.preventDefault()">
+   <input id="searchBox" placeholder="Search" oninput="doSearch(this.value)">
+   <button class="sbtn" type="submit">🔍</button>
+  </form>
+  <div class="top-right">
+   <button class="icon-btn mobile-search-btn" onclick="toggleMobileSearch()">🔍</button>
+   <button class="icon-btn" onclick="toast('🔔 1 new notification: It\'s your birthday!! 🎂')">🔔</button>
+   <div class="me">🌷</div>
+  </div>
  </header>
+ <div class="mobile-search" id="mobileSearch">
+  <input placeholder="Search your surprises..." oninput="doSearch(this.value)">
+ </div>
 
- <div class="banner">
+ <div class="chips" id="chips"></div>
+
+ <div class="ch-banner">
   <div>
    <h1>Happy Birthday, Jaanu! 🎂</h1>
-   <p>A tiny corner of the internet, made just for you.<br>
-   Stay a little, smile a little, and open your surprises. ♡</p>
+   <p>A tiny corner of the internet, made just for you.<br>Stay a little, smile a little, and open your surprises. ♡</p>
   </div>
  </div>
 
- <div class="channel">
-  <div class="avatar">🌷</div>
+ <div class="ch-info">
+  <div class="ch-avatar">🌷</div>
   <div>
    <h2>Our Little Universe 💗</h2>
-   <p>@ourlittleuniverse · A special channel for Jaanu</p>
-   <p>One birthday. A million reasons to smile.</p>
+   <div class="ch-meta">@ourlittleuniverse · <span id="subCount">1 subscriber</span> · 6 videos</div>
   </div>
  </div>
+ <div class="ch-about">One birthday. A million reasons to smile. A special channel made only for Jaanu ›</div>
+ <div class="ch-actions"><button class="sub-btn" onclick="toggleSub(this)">Subscribe</button></div>
 
- <section class="section">
+ <nav class="tabs">
+  <button class="tab active" onclick="goTab(this,'videosSec')">Home</button>
+  <button class="tab" onclick="goTab(this,'videosSec')">Videos</button>
+  <button class="tab" onclick="goTab(this,'momentsSec')">Moments</button>
+  <button class="tab" onclick="goTab(this,'letterSec')">Letter</button>
+ </nav>
+
+ <section class="section" id="videosSec">
   <h3>▶ Made Especially For You</h3>
-  <div class="cards" id="videos"></div>
+  <div class="grid" id="videos"></div>
  </section>
 
- <section class="section">
-  <h3>📸 Little Memories</h3>
-  <p style="color:#aaa;font-size:13px">A tiny gallery of things that make life lovely.</p>
-  <div class="gallery" id="gallery"></div>
+ <section class="section" id="momentsSec">
+  <h3>📸 Little Moments</h3>
+  <div class="moments" id="gallery"></div>
  </section>
 
- <section class="section">
+ <section class="section" id="letterSec">
   <h3>🔐 A Secret Just For You</h3>
   <div class="letter">
    <p>Hey, Jaanu! There's a little something hidden here.</p>
@@ -216,12 +298,75 @@ button{font:inherit;cursor:pointer}
    </div>
   </div>
  </section>
- <div style="text-align:center;padding:25px;color:#888;font-size:12px">
-  Made with all the love in this little universe ♡
+
+ <div class="footer">Made with all the love in this little universe ♡</div>
+
+ <nav class="bottom-nav">
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="ico">⌂</span>Home</button>
+  <button onclick="scrollToId('momentsSec')"><span class="ico">✦</span>Moments</button>
+  <button onclick="makeWish()"><span class="wish">🎂</span></button>
+  <button onclick="scrollToId('letterSec')"><span class="ico">💌</span>Letter</button>
+  <button onclick="goHome()"><span class="ico">📱</span>Apps</button>
+ </nav>
+</div>
+
+<!-- WATCH PAGE -->
+<div id="watchPage">
+ <header class="topbar">
+  <div class="top-left">
+   <button class="icon-btn" onclick="closeWatch()">←</button>
+   <div class="brand"><span class="brand-badge">♥</span>Our Little Universe</div>
+  </div>
+ </header>
+ <div class="watch-wrap">
+  <div class="watch-main">
+   <div class="player">
+    <img id="wImg" src="" alt="">
+    <button class="play-overlay" id="playBtn" onclick="playVideo()"><span class="play-circle">▶</span></button>
+    <div class="caption" id="caption"></div>
+    <div class="progress"><div id="progressBar"></div></div>
+   </div>
+   <div class="watch-info">
+    <h1 id="wTitle"></h1>
+    <div class="owner">
+     <div class="mini-av">🌷</div>
+     <div class="who"><b>Our Little Universe 💗</b><span id="wSubs">1 subscriber</span></div>
+     <button class="sub-btn" id="wSubBtn" onclick="toggleSub(this)">Subscribe</button>
+    </div>
+    <div class="actions">
+     <div class="likebox">
+      <button class="pill" id="likeBtn" onclick="likeVideo()">👍 <span id="likeCount">999</span></button>
+      <button class="pill" onclick="toast('Dislikes are disabled on birthdays 😤💗')">👎</button>
+     </div>
+     <button class="pill" onclick="toast('Link copied... just kidding, this one is only for you 💗')">↗ Share</button>
+     <button class="pill" onclick="toast('Saved to \'Forever Favourites\' 💾')">＋ Save</button>
+     <button class="pill" onclick="toast('Thanks sent: 1 hug 🤗')">🎁 Thanks</button>
+    </div>
+    <div class="desc" id="descBox" onclick="this.classList.toggle('open')">
+     <div class="stats" id="wStats"></div>
+     <div id="wText"></div>
+     <div class="more" id="wMore"></div>
+     <div class="toggle">...more</div>
+    </div>
+   </div>
+   <div class="comments">
+    <h3 id="cCount">Comments</h3>
+    <div class="add-comment">
+     <div class="mini-av" style="width:32px;height:32px">🌷</div>
+     <input id="commentInput" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addComment()">
+     <button class="pill" onclick="addComment()">Comment</button>
+    </div>
+    <div id="commentList"></div>
+   </div>
+  </div>
+  <aside class="upnext">
+   <h3>Up next</h3>
+   <div id="upNext"></div>
+  </aside>
  </div>
 </div>
 
-<!-- VIDEO SURPRISE POPUP -->
+<!-- PHOTO POPUP -->
 <div class="video-modal" id="videoModal" onclick="if(event.target===this)closeVideo()">
  <div class="video-box">
   <button class="close" onclick="closeVideo()">×</button>
@@ -229,49 +374,42 @@ button{font:inherit;cursor:pointer}
  </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-// EDIT THE MESSAGES HERE!
+// ===== EDIT THE MESSAGES HERE! =====
 const appMessages = {
- whatsapp:{
-  icon:"🤧",
-  title:"Achooo! WhatsApp caught a birthday bug!",
-  message:"Oh nooo, Jaanu! All your chats have gone on a tiny holiday today. 😂📱 Your birthday messages have been redirected to the most important place... YOUR SURPRISE on YouTube! 💗"
- },
- instagram:{
-  icon:"📸",
-  title:"Oopsie! Instagram is out of service!",
-  message:"The Insta feed is taking a birthday break because somebody this gorgeous deserves their own celebration! 🎀✨ No scrolling today, birthday star. Your main-character moment is waiting on YouTube!"
- },
- spotify:{
-  icon:"🎧",
-  title:"Shhh... the playlist is classified!",
-  message:"A special birthday playlist has been locked away! 🎶🔐 The songs, surprises, and secret birthday vibes are waiting for you on YouTube. Go on, Jaanu, your next surprise is calling! 💗"
- }
+ whatsapp:{icon:"🤧",title:"Achooo! WhatsApp caught a birthday bug!",
+  message:"Oh nooo, Jaanu! All your chats have gone on a tiny holiday today. 😂📱 Your birthday messages have been redirected to the most important place... YOUR SURPRISE on YouTube! 💗"},
+ instagram:{icon:"📸",title:"Oopsie! Instagram is out of service!",
+  message:"The Insta feed is taking a birthday break because somebody this gorgeous deserves their own celebration! 🎀✨ No scrolling today, birthday star. Your main-character moment is waiting on YouTube!"},
+ spotify:{icon:"🎧",title:"Shhh... the playlist is classified!",
+  message:"A special birthday playlist has been locked away! 🎶🔐 The songs, surprises, and secret birthday vibes are waiting for you on YouTube. Go on, Jaanu, your next surprise is calling! 💗"}
 };
 
-// Replace these image URLs with your own photos.
+// cat = which filter chip it shows under. Replace img URLs with your own photos.
 const videos = [
- {title:"Reasons You're My Favourite Person 💗",
+ {title:"Reasons You're My Favourite Person 💗",cat:"Love",dur:"3:14",views:"1M views",ago:"just now",
   img:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=700&q=80",
   text:"A little reminder of how special you are.",
   message:"Jaanu, you make ordinary days feel brighter just by being yourself. Happy birthday, you wonderful human! 💗"},
- {title:"A Little Letter For You 💌",
+ {title:"A Little Letter For You 💌",cat:"Letters",dur:"2:22",views:"999K views",ago:"1 minute ago",
   img:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80",
   text:"Words from the heart, just for you.",
   message:"I hope you always see yourself with the same kindness that you give to others. You deserve the whole universe and more. 🌙"},
- {title:"Birthday Magic 🎂",
+ {title:"Birthday Magic 🎂",cat:"Celebration",dur:"4:20",views:"2M views",ago:"today",
   img:"https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=700&q=80",
   text:"Your very own birthday celebration.",
   message:"May your birthday be full of laughter, cake, surprises, and beautiful moments you'll remember for years! 🎉"},
- {title:"Our Little Universe 🌷",
+ {title:"Our Little Universe 🌷",cat:"Memories",dur:"5:55",views:"∞ views",ago:"forever ago",
   img:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=700&q=80",
   text:"A tiny universe of love and memories.",
   message:"Some moments are small, but the happiness they bring is enormous. Here's to more beautiful moments ahead! ♡"},
- {title:"A Thousand Reasons To Smile ✨",
+ {title:"A Thousand Reasons To Smile ✨",cat:"Love",dur:"1:11",views:"1K smiles",ago:"today",
   img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80",
   text:"For every day you need a little happiness.",
   message:"Whenever life gets hard, remember that every storm passes and brighter days return. Keep being your lovely self, Jaanu. 💗"},
- {title:"One More Surprise! 🎁",
+ {title:"One More Surprise! 🎁",cat:"Celebration",dur:"0:59",views:"Premiering now",ago:"live",
   img:"https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=700&q=80",
   text:"You thought we were done? Never!",
   message:"Surpriseee! 🥳 This little website is your reminder that today is all about you. Make a wish, close your eyes, and get ready for a wonderful year!"}
@@ -286,73 +424,154 @@ const photos = [
  "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=500&q=80"
 ];
 
+// Comments shown under every video (Jaanu can add her own too)
+const starterComments = [
+ {name:"@birthday_fairy",ago:"2 min ago",text:"Happiest birthday Jaanu!! 🎂✨ This channel is literally made of love",likes:"1.2K"},
+ {name:"@cake_department",ago:"5 min ago",text:"Reminder: calories don't count today 🍰",likes:"864"},
+ {name:"@moon_and_stars",ago:"10 min ago",text:"The moon asked me to tell you it's jealous of how bright you shine 🌙",likes:"2K"}
+];
+const chipNames = ["All","Love","Letters","Celebration","Memories"];
+// ===================================
+
+let activeChip="All", searchText="", current=0, liked=false, subscribed=false;
+const comments = videos.map(()=>[...starterComments]);
+const esc = s => s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 function openApp(app){
  if(app==="youtube"){openYouTube();return}
- const data=appMessages[app];
- document.getElementById("popIcon").textContent=data.icon;
- document.getElementById("popTitle").textContent=data.title;
- document.getElementById("popMessage").textContent=data.message;
- document.getElementById("appModal").classList.add("show");
+ const d=appMessages[app];
+ popIcon.textContent=d.icon; popTitle.textContent=d.title; popMessage.textContent=d.message;
+ appModal.classList.add("show");
 }
-function closeAppModal(){
- document.getElementById("appModal").classList.remove("show");
-}
+function closeAppModal(){appModal.classList.remove("show")}
 function openYouTube(){
- closeAppModal();
- document.getElementById("phoneHome").style.display="none";
- document.getElementById("birthdaySite").classList.add("open");
- window.scrollTo(0,0);
+ closeAppModal(); phoneHome.style.display="none";
+ birthdaySite.classList.add("open"); window.scrollTo(0,0);
+ setTimeout(()=>toast("Welcome back, Jaanu 💗 You have 6 new videos"),500);
 }
 function goHome(){
- document.getElementById("birthdaySite").classList.remove("open");
- document.getElementById("phoneHome").style.display="flex";
- window.scrollTo(0,0);
+ birthdaySite.classList.remove("open"); closeWatch();
+ phoneHome.style.display="flex"; window.scrollTo(0,0);
 }
+
+function renderChips(){
+ chips.innerHTML=chipNames.map(c=>`<button class="chip ${c===activeChip?'active':''}" onclick="setChip('${c}')">${c}</button>`).join("");
+}
+function setChip(c){activeChip=c;renderChips();renderVideos()}
+function doSearch(v){searchText=v.toLowerCase();renderVideos()}
+function toggleMobileSearch(){mobileSearch.classList.toggle("show")}
+
 function renderVideos(){
- document.getElementById("videos").innerHTML=videos.map((v,i)=>`
- <article class="video" onclick="openVideo(${i})">
-  <img src="${v.img}" alt="${v.title}" loading="lazy">
-  <h4>${v.title}</h4>
-  <p>Our Little Universe · Birthday special</p>
- </article>`).join("");
- document.getElementById("gallery").innerHTML=photos.map((src,i)=>`
- <img src="${src}" alt="Memory ${i+1}" loading="lazy"
- onclick="openPhoto(${i})">`).join("");
+ const list=videos.map((v,i)=>({...v,i})).filter(v=>
+  (activeChip==="All"||v.cat===activeChip)&&v.title.toLowerCase().includes(searchText));
+ document.getElementById("videos").innerHTML=list.length?list.map(v=>`
+  <article class="card" onclick="openVideo(${v.i})">
+   <div class="thumb"><img src="${v.img}" alt="" loading="lazy"><span class="dur">${v.dur}</span></div>
+   <div class="card-meta">
+    <div class="mini-av">🌷</div>
+    <div><h4>${v.title}</h4><p>Our Little Universe 💗<br>${v.views} · ${v.ago}</p></div>
+   </div>
+  </article>`).join(""):`<div class="empty">No videos found... but you're still the main character 💗</div>`;
 }
+function renderMoments(){
+ gallery.innerHTML=photos.map((src,i)=>`
+  <div class="moment" onclick="openPhoto(${i})">
+   <div class="mimg"><img src="${src}" alt="" loading="lazy"><span class="views">${(i+1)*111}K views</span></div>
+   <h4>Little memory #${i+1} ♡</h4>
+  </div>`).join("");
+}
+
 function openVideo(i){
- const v=videos[i];
- document.getElementById("videoContent").innerHTML=`
- <h2>${v.title}</h2>
- <img src="${v.img}" alt="" style="width:100%;border-radius:12px">
- <p>${v.text}</p>
- <div class="letter">${v.message}</div>
- <p style="color:#ff91b5">♡ Made especially for Jaanu ♡</p>`;
- document.getElementById("videoModal").classList.add("show");
+ current=i; liked=false; const v=videos[i];
+ wImg.src=v.img; wTitle.textContent=v.title;
+ wStats.textContent=`${v.views}  ${v.ago}`;
+ wText.innerHTML=`${esc(v.text)} <span class="tags">#HappyBirthday #Jaanu #OurLittleUniverse</span>`;
+ wMore.innerHTML=`<div class="letter">${v.message}</div><p>♡ Made especially for Jaanu ♡</p>`;
+ descBox.classList.remove("open");
+ likeCount.textContent="999"; likeBtn.classList.remove("liked");
+ playBtn.style.display="grid"; caption.style.display="none";
+ progressBar.style.transition="none"; progressBar.style.width="0";
+ renderComments(); renderUpNext();
+ watchPage.classList.add("show"); watchPage.scrollTo(0,0);
 }
-function closeVideo(){
- document.getElementById("videoModal").classList.remove("show");
+function closeWatch(){watchPage.classList.remove("show")}
+function playVideo(){
+ const v=videos[current];
+ playBtn.style.display="none";
+ caption.textContent=v.message; caption.style.display="block";
+ progressBar.style.transition="none"; progressBar.style.width="0";
+ progressBar.offsetWidth;
+ progressBar.style.transition="width 12s linear"; progressBar.style.width="100%";
 }
+function likeVideo(){
+ liked=!liked; likeBtn.classList.toggle("liked",liked);
+ likeCount.textContent=liked?"1,000":"999";
+ if(liked)toast("Added to Liked videos 💗");
+}
+function toggleSub(){
+ subscribed=!subscribed;
+ document.querySelectorAll(".sub-btn").forEach(b=>{
+  b.textContent=subscribed?"🔔 Subscribed":"Subscribe"; b.classList.toggle("on",subscribed)});
+ const t=subscribed?"2 subscribers":"1 subscriber";
+ subCount.textContent=t; wSubs.textContent=t;
+ if(subscribed)toast("Subscribed! Notifications on for every smile 🔔");
+}
+function renderComments(){
+ const list=comments[current];
+ cCount.textContent=`${list.length} Comments`;
+ commentList.innerHTML=list.map(c=>`
+  <div class="comment">
+   <div class="mini-av" style="width:36px;height:36px">${c.mine?'🌷':'💗'}</div>
+   <div><b>${esc(c.name)}</b><small>${c.ago}</small><p>${esc(c.text)}</p>
+   <div class="c-act">👍 ${c.likes}   👎   Reply</div></div>
+  </div>`).join("");
+}
+function addComment(){
+ const t=commentInput.value.trim(); if(!t)return;
+ comments[current].unshift({name:"@jaanu",ago:"just now",text:t,likes:"♾️",mine:true});
+ commentInput.value=""; renderComments(); toast("Comment posted 💬");
+}
+function renderUpNext(){
+ upNext.innerHTML=videos.map((v,i)=>i===current?"":`
+  <div class="next" onclick="openVideo(${i})">
+   <div class="thumb"><img src="${v.img}" alt="" loading="lazy"><span class="dur">${v.dur}</span></div>
+   <div><h4>${v.title}</h4><p>Our Little Universe 💗<br>${v.views} · ${v.ago}</p></div>
+  </div>`).join("");
+}
+
 function openPhoto(i){
- document.getElementById("videoContent").innerHTML=`
- <h2>A Little Memory 📸</h2>
- <img src="${photos[i]}" alt="Memory" style="width:100%;border-radius:12px">
- <p>Every little moment deserves a place in our universe. ♡</p>
- <button class="action" onclick="openPhoto(${(i+1)%photos.length})">Next photo →</button>`;
- document.getElementById("videoModal").classList.add("show");
+ videoContent.innerHTML=`
+  <h2>A Little Memory 📸</h2>
+  <img src="${photos[i]}" alt="Memory" style="width:100%;border-radius:12px">
+  <p>Every little moment deserves a place in our universe. ♡</p>
+  <button class="action" onclick="openPhoto(${(i+1)%photos.length})">Next memory →</button>`;
+ videoModal.classList.add("show");
 }
-function revealLetter(){
- document.getElementById("secretLetter").hidden=false;
+function closeVideo(){videoModal.classList.remove("show")}
+function revealLetter(){secretLetter.hidden=false}
+function goTab(btn,id){
+ document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+ btn.classList.add("active"); scrollToId(id);
+}
+function scrollToId(id){
+ const y=document.getElementById(id).getBoundingClientRect().top+window.scrollY-110;
+ window.scrollTo({top:y,behavior:"smooth"});
+}
+function makeWish(){toast("🎂 Close your eyes, make a wish... it's officially on its way ✨")}
+let toastTimer;
+function toast(msg){
+ const t=document.getElementById("toast");
+ t.textContent=msg; t.classList.add("show");
+ clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2600);
 }
 function updateClock(){
- const now=new Date();
- document.getElementById("clock").textContent=
- now.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:true});
+ clock.textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:true});
 }
-renderVideos();
-updateClock();
+
+renderChips(); renderVideos(); renderMoments(); updateClock();
 setInterval(updateClock,30000);
 document.addEventListener("keydown",e=>{
- if(e.key==="Escape"){closeAppModal();closeVideo()}
+ if(e.key==="Escape"){closeAppModal();closeVideo();closeWatch()}
 });
 </script>
 </body>
