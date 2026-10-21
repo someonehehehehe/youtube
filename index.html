@@ -120,8 +120,8 @@ button{font:inherit;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr;gap:24px 16px}
 .card{cursor:pointer;min-width:0;animation:fadeUp .5s ease both}
 .thumb{position:relative;border-radius:12px;overflow:hidden;background:#28233a}
-.thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .35s}
-.card:hover .thumb img{transform:scale(1.05)}
+.thumb video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .35s;pointer-events:none;background:#28233a}
+.card:hover .thumb video{transform:scale(1.05)}
 .hover{position:absolute;inset:0;display:grid;place-items:center;background:#0006;opacity:0;transition:.25s;font-weight:600;font-size:15px}
 .card:hover .hover{opacity:1}
 .dur{position:absolute;right:7px;bottom:7px;background:#000c;font-size:12px;font-weight:600;padding:2px 5px;border-radius:4px}
@@ -163,18 +163,15 @@ button{font:inherit;cursor:pointer}
 #watchPage.show{display:block;animation:fadeIn .3s}
 .watch-wrap{display:grid;grid-template-columns:1fr;gap:20px;max-width:1300px;margin:0 auto;padding:0 0 40px}
 .player{position:relative;background:#000;aspect-ratio:16/9;overflow:hidden;user-select:none}
-.player img{width:100%;height:100%;object-fit:cover;opacity:.7;display:block}
-.player.playing img{animation:kb 25s linear forwards}
-.player.paused img{animation-play-state:paused}
-@keyframes kb{to{transform:scale(1.18)}}
+.player video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
 .play-overlay{position:absolute;inset:0 0 44px 0;display:grid;place-items:center;background:transparent;border:0;width:100%;z-index:2}
 .play-circle{width:70px;height:70px;border-radius:50%;background:#000a;border:2px solid #fff9;display:grid;place-items:center;font-size:26px;color:#fff;padding-left:5px;transition:.2s}
 .play-overlay:hover .play-circle{background:var(--pink);color:#301521;transform:scale(1.08)}
-.caption{position:absolute;left:5%;right:5%;bottom:22%;text-align:center;font-size:clamp(14px,2.6vw,21px);line-height:1.6;background:#000b;padding:10px 14px;border-radius:8px;display:none;z-index:1;min-height:1.6em}
+.caption{position:absolute;left:5%;right:5%;bottom:60px;text-align:center;font-size:clamp(13px,2.4vw,19px);line-height:1.6;background:#000b;padding:8px 14px;border-radius:8px;display:none;z-index:1;pointer-events:none}
 .endscreen{position:absolute;inset:0 0 44px 0;background:#000d;display:none;align-items:center;justify-content:center;gap:18px;padding:14px;z-index:3}
 .endscreen.show{display:flex;animation:fadeIn .4s}
 .end-card{width:min(230px,55%);cursor:pointer}
-.end-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;opacity:1}
+.end-card video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;pointer-events:none;background:#28233a}
 .end-card small{color:#ccc;font-size:12px}
 .end-card b{display:block;font-size:13px;margin:4px 0 6px;line-height:1.35}
 .end-btns{display:flex;flex-direction:column;gap:8px}
@@ -419,7 +416,7 @@ button{font:inherit;cursor:pointer}
  <div class="watch-wrap">
   <div>
    <div class="player" id="player">
-    <img id="wImg" src="" alt="">
+    <video id="wVid" playsinline preload="metadata" onclick="togglePlay()"></video>
     <div class="caption" id="caption"></div>
     <button class="play-overlay" id="playBtn" onclick="playVideo()"><span class="play-circle">▶</span></button>
     <div class="endscreen" id="endScreen">
@@ -429,7 +426,7 @@ button{font:inherit;cursor:pointer}
      </div>
      <div class="end-card" onclick="goNext()">
       <small>Up next in <span id="countNum">5</span></small>
-      <img id="nextImg" src="" alt="">
+      <video id="nextVid" muted playsinline preload="metadata"></video>
       <b id="nextTitle"></b>
      </div>
     </div>
@@ -440,8 +437,8 @@ button{font:inherit;cursor:pointer}
       <button onclick="goNext()">⏭</button>
       <span id="timeTxt">0:00 / 0:00</span>
       <span class="sp"></span>
-      <button onclick="toast('🔊 Volume: maximum love')">🔊</button>
-      <button onclick="toast('💬 Captions are always on for you')">CC</button>
+      <button id="volBtn" onclick="toggleMute()">🔊</button>
+      <button onclick="toggleCaptions()">CC</button>
       <button onclick="fullScreen()">⛶</button>
      </div>
     </div>
@@ -527,41 +524,42 @@ const appMessages = {
   message:"A special birthday playlist has been locked away! 🎶🔐 The songs, surprises, and secret birthday vibes are waiting for you on YouTube. Go on, Jaanu, your next surprise is calling! 💗"}
 };
 
-// cat = which chip it appears under. live:true shows a LIVE badge. Replace img URLs with your own photos.
+// cat = which chip it appears under. live:true shows a LIVE badge.
+// dur fills in automatically from the real video length.
 const videos = [
- {title:"Reasons You're My Favourite Person 💗",cat:"Love",dur:"3:14",views:"1M views",ago:"just now",
-  img:"https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80",
+ {title:"Reasons You're My Favourite Person 💗",cat:"Love",dur:"0:00",views:"1M views",ago:"just now",
+  src:"video1.mp4",
   text:"A little reminder of how special you are.",
   message:"Jaanu, you make ordinary days feel brighter just by being yourself. Happy birthday, you wonderful human! 💗"},
- {title:"A Little Letter For You 💌",cat:"Letters",dur:"2:22",views:"999K views",ago:"1 minute ago",
-  img:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
+ {title:"A Little Letter For You 💌",cat:"Letters",dur:"0:00",views:"999K views",ago:"1 minute ago",
+  src:"video2.mp4",
   text:"Words from the heart, just for you.",
   message:"I hope you always see yourself with the same kindness that you give to others. You deserve the whole universe and more. 🌙"},
- {title:"Birthday Magic 🎂",cat:"Celebration",dur:"4:20",views:"2M views",ago:"today",
-  img:"https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=80",
+ {title:"Birthday Magic 🎂",cat:"Celebration",dur:"0:00",views:"2M views",ago:"today",
+  src:"video3.mp4",
   text:"Your very own birthday celebration.",
   message:"May your birthday be full of laughter, cake, surprises, and beautiful moments you'll remember for years! 🎉"},
- {title:"Our Little Universe 🌷",cat:"Memories",dur:"5:55",views:"∞ views",ago:"forever ago",
-  img:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80",
+ {title:"Our Little Universe 🌷",cat:"Memories",dur:"0:00",views:"∞ views",ago:"forever ago",
+  src:"video4.mp4",
   text:"A tiny universe of love and memories.",
   message:"Some moments are small, but the happiness they bring is enormous. Here's to more beautiful moments ahead! ♡"},
- {title:"A Thousand Reasons To Smile ✨",cat:"Love",dur:"1:11",views:"1K smiles",ago:"today",
-  img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+ {title:"A Thousand Reasons To Smile ✨",cat:"Love",dur:"0:00",views:"1K smiles",ago:"today",
+  src:"video5.mp4",
   text:"For every day you need a little happiness.",
   message:"Whenever life gets hard, remember that every storm passes and brighter days return. Keep being your lovely self, Jaanu. 💗"},
- {title:"One More Surprise! 🎁",cat:"Celebration",dur:"0:59",views:"1 watching",ago:"streaming now",live:true,
-  img:"https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
+ {title:"One More Surprise! 🎁",cat:"Celebration",dur:"0:00",views:"1 watching",ago:"streaming now",live:true,
+  src:"video6.mp4",
   text:"You thought we were done? Never!",
   message:"Surpriseee! 🥳 This little website is your reminder that today is all about you. Make a wish, close your eyes, and get ready for a wonderful year!"}
 ];
 
 const photos = [
- "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=500&q=80",
- "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=500&q=80",
- "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80",
- "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
- "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=500&q=80",
- "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=500&q=80"
+ "memory1.jpg",
+ "memory2.jpg",
+ "memory3.jpg",
+ "memory4.jpg",
+ "memory5.jpg",
+ "memory6.jpg"
 ];
 
 // Fake comments under every video (try your friends' names!)
@@ -576,9 +574,10 @@ const chipNames = ["All","Love","Letters","Celebration","Memories"];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let activeChip="All",searchText="",cur=0,liked=false,subscribed=false;
-let p=0,playing=false,total=8000,timer=null,countTimer=null;
+let playing=false,countTimer=null,capOn=true;
 const watched=videos.map(()=>false);
 const comments=videos.map(()=>starterComments.map(c=>({...c})));
+const fmt=t=>{t=isFinite(t)?t:0;return `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,"0")}`};
 
 /* ---------- home screen ---------- */
 function openApp(app){
@@ -612,7 +611,7 @@ function setChip(c){activeChip=c;renderChips();renderVideos()}
 function doSearch(v){searchText=v.toLowerCase();renderVideos()}
 function toggleMobileSearch(){$("mobileSearch").classList.toggle("show")}
 function thumbHTML(v,i,hover){
- return `<div class="thumb"><img src="${v.img}" alt="" loading="lazy">
+ return `<div class="thumb"><video src="${v.src}#t=0.5" muted playsinline preload="metadata"></video>
   ${hover?'<div class="hover">▶ Play</div>':''}
   <span class="dur ${v.live?'live':''}">${v.live?'● LIVE':v.dur}</span>
   ${watched[i]?'<div class="watched"></div>':''}</div>`;
@@ -626,6 +625,13 @@ function renderVideos(){
    <div class="card-meta"><div class="mini-av">🌷</div>
     <div><h4>${v.title}</h4><p>Our Little Universe 💗<br>${v.views} · ${v.ago}</p></div></div>
   </article>`).join(""):`<div class="empty">No videos found... but you're still the main character 💗</div>`;
+}
+// read each video's real length and show it on the cards
+function loadDurations(){
+ videos.forEach(v=>{
+  const m=document.createElement("video");m.preload="metadata";m.src=v.src;
+  m.onloadedmetadata=()=>{v.dur=fmt(m.duration);renderVideos();if($("watchPage").classList.contains("show"))renderUpNext()};
+ });
 }
 function renderMoments(){
  $("gallery").innerHTML=photos.map((src,i)=>`
@@ -651,21 +657,24 @@ function scrollToId(id){
  window.scrollTo({top:y,behavior:"smooth"});
 }
 
-/* ---------- watch page + player ---------- */
-const secs=s=>{const[m,x]=s.split(":").map(Number);return m*60+x};
-const fmt=t=>`${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,"0")}`;
+/* ---------- watch page + real video player ---------- */
+const vid=$("wVid");
+vid.addEventListener("play",()=>{playing=true;render()});
+vid.addEventListener("pause",()=>{playing=false;render()});
+vid.addEventListener("timeupdate",render);
+vid.addEventListener("loadedmetadata",render);
+vid.addEventListener("ended",finish);
 
 function openVideo(i,auto){
- stopAll();cur=i;p=0;liked=false;
+ stopAll();cur=i;liked=false;
  const v=videos[i];
- total=Math.max(7000,v.message.length*60+2500);
- $("wImg").src=v.img;$("wTitle").textContent=v.title;
+ vid.src=v.src;vid.load();
+ $("wTitle").textContent=v.title;
  $("wStats").textContent=`${v.views}  ${v.ago}`;
  $("wText").innerHTML=`${esc(v.text)} <span class="tags">#HappyBirthday #Jaanu #OurLittleUniverse</span>`;
  $("wMore").innerHTML=`<div class="letter">${v.message}</div><p>♡ Made especially for Jaanu ♡</p>`;
  $("descBox").classList.remove("open");$("descToggle").textContent="...more";
  $("likeCount").textContent="999";$("likeBtn").classList.remove("liked");
- $("player").className="player";
  $("playBtn").style.display="grid";$("caption").style.display="none";
  $("endScreen").classList.remove("show");
  render();renderComments();renderUpNext();
@@ -673,47 +682,58 @@ function openVideo(i,auto){
  if(auto)playVideo();
 }
 function closeWatch(){stopAll();$("watchPage").classList.remove("show")}
-function stopAll(){clearInterval(timer);clearInterval(countTimer);playing=false}
+function stopAll(){clearInterval(countTimer);vid.pause();playing=false}
 function playVideo(){
- if(p>=1)p=0;
- const pl=$("player"),img=$("wImg");
- if(p===0){img.style.animation="none";void img.offsetWidth;img.style.animation=""}
+ clearInterval(countTimer);
+ if(vid.ended)vid.currentTime=0;
  $("playBtn").style.display="none";$("endScreen").classList.remove("show");
- $("caption").style.display="block";
- pl.classList.add("playing");pl.classList.remove("paused");
- playing=true;clearInterval(timer);timer=setInterval(tick,100);render();
+ $("caption").style.display=capOn?"block":"none";
+ vid.play().catch(()=>{$("playBtn").style.display="grid"});
 }
-function pauseVideo(){clearInterval(timer);playing=false;$("player").classList.add("paused");render()}
-function togglePlay(){playing?pauseVideo():playVideo()}
-function tick(){p+=100/total;if(p>=1){p=1;finish()}render()}
+function pauseVideo(){vid.pause()}
+function togglePlay(){vid.paused?playVideo():pauseVideo()}
 function render(){
- const v=videos[cur],d=secs(v.dur);
+ const v=videos[cur],d=isFinite(vid.duration)?vid.duration:0,t=vid.currentTime||0,p=d?t/d:0;
  $("barFill").style.width=(p*100)+"%";
- $("timeTxt").textContent=`${fmt(p*d)} / ${fmt(d)}`;
+ $("timeTxt").textContent=`${fmt(t)} / ${fmt(d)}`;
  $("caption").textContent=v.message.slice(0,Math.ceil(v.message.length*Math.min(1,p/.75)));
  $("ppBtn").textContent=playing?"❚❚":"▶";
 }
 function seek(e){
+ const d=vid.duration;if(!isFinite(d))return;
  const r=e.currentTarget.getBoundingClientRect();
- p=Math.min(.999,Math.max(0,(e.clientX-r.left)/r.width));
- clearInterval(countTimer);$("endScreen").classList.remove("show");
- $("caption").style.display="block";$("playBtn").style.display="none";
- if(!playing)playVideo();else render();
+ vid.currentTime=Math.min(.999,Math.max(0,(e.clientX-r.left)/r.width))*d;
+ if(vid.paused)playVideo();else render();
 }
 function finish(){
- clearInterval(timer);playing=false;$("player").classList.add("paused");
+ playing=false;render();
+ $("caption").style.display="none";
  watched[cur]=true;renderVideos();renderUpNext();
  const n=(cur+1)%videos.length;
- $("nextImg").src=videos[n].img;$("nextTitle").textContent=videos[n].title;
+ $("nextVid").src=videos[n].src+"#t=0.5";$("nextTitle").textContent=videos[n].title;
  $("endScreen").classList.add("show");
  let c=5;$("countNum").textContent=c;
  clearInterval(countTimer);
  countTimer=setInterval(()=>{c--;$("countNum").textContent=c;if(c<=0)goNext()},1000);
 }
 function goNext(){clearInterval(countTimer);openVideo((cur+1)%videos.length,true)}
-function replay(){clearInterval(countTimer);p=0;playVideo()}
+function replay(){clearInterval(countTimer);vid.currentTime=0;playVideo()}
 function cancelNext(){clearInterval(countTimer);$("endScreen").classList.remove("show");$("playBtn").style.display="grid"}
-function fullScreen(){const pl=$("player");(pl.requestFullscreen||pl.webkitRequestFullscreen||function(){}).call(pl)}
+function toggleMute(){
+ vid.muted=!vid.muted;$("volBtn").textContent=vid.muted?"🔇":"🔊";
+ toast(vid.muted?"🔇 Muted":"🔊 Volume: maximum love");
+}
+function toggleCaptions(){
+ capOn=!capOn;
+ $("caption").style.display=(capOn&&!vid.paused)?"block":"none";
+ toast(capOn?"💬 Love notes on":"💬 Love notes hidden");
+}
+function fullScreen(){
+ const pl=$("player");
+ if(pl.requestFullscreen)pl.requestFullscreen();
+ else if(pl.webkitRequestFullscreen)pl.webkitRequestFullscreen();
+ else if(vid.webkitEnterFullscreen)vid.webkitEnterFullscreen();
+}
 function toggleDesc(){
  const d=$("descBox");d.classList.toggle("open");
  $("descToggle").textContent=d.classList.contains("open")?"Show less":"...more";
@@ -835,7 +855,7 @@ function updateClock(){
  $("clock").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:true});
 }
 
-renderChips();renderVideos();renderMoments();updateClock();
+renderChips();renderVideos();renderMoments();loadDurations();updateClock();
 setInterval(updateClock,30000);
 setTimeout(()=>$("notif").classList.add("show"),1500);
 setTimeout(()=>$("notif").classList.remove("show"),8000);
